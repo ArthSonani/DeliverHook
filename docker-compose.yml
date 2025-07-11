@@ -1,0 +1,74 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://webhook_user:webhook_pass@db:5432/webhook_service
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - APP_SECRET_KEY=${APP_SECRET_KEY:-your-secret-key-here}
+      - LOG_RETENTION_HOURS=72
+      - MAX_RETRY_ATTEMPTS=5
+      - PYTHONPATH=/app
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    networks:
+      - webhook-network
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      - DATABASE_URL=postgresql://webhook_user:webhook_pass@db:5432/webhook_service
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - APP_SECRET_KEY=${APP_SECRET_KEY:-your-secret-key-here}
+      - LOG_RETENTION_HOURS=72
+      - MAX_RETRY_ATTEMPTS=5
+      - PYTHONPATH=/app
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    networks:
+      - webhook-network
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=webhook_user
+      - POSTGRES_PASSWORD=webhook_pass
+      - POSTGRES_DB=webhook_service
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - webhook-network
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - webhook-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  webhook-network:
+    driver: bridge 
