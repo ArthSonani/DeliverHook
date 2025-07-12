@@ -13,7 +13,7 @@
 
 ## 🚀 Features
 
-- **Subscription Management:** CRUD operations for webhook subscriptions  
+- **Subscription Management:** CRUD operations for webhook subscriptions...
 - **Webhook Ingestion:** Accepts incoming webhook payloads with signature verification  
 - **Asynchronous Delivery:** Background workers process delivery tasks  
 - **Retry Mechanism:** Exponential backoff with configurable max attempts  
