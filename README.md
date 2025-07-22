@@ -2,14 +2,6 @@
 
 **DeliverHook** is a robust backend system that functions as a reliable webhook delivery service. This service ingests incoming webhooks, queues them, and attempts delivery to subscribed target URLs, handling failures with retries and providing visibility into the delivery status.
 
----
-
-## 🌐 Deployed Links
-
-- **API Link:** [http://13.200.222.126:8000/](http://13.200.222.126:8000/)
-- **Swagger docs:** [http://13.200.222.126:8000/docs](http://13.200.222.126:8000/docs)
-
----
 
 ## 🚀 Features
 
