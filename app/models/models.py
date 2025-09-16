@@ -10,7 +10,7 @@ class Subscription(Base):
     id = Column(Integer, primary_key=True, index=True)
     target_url = Column(String, nullable=False)
     secret_key = Column(String, nullable=True)
-    event_types = Column(ARRAY(String), nullable=True)  # List of event types to filter
+    event_types = Column(ARRAY(String), nullable=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
@@ -43,4 +43,5 @@ class DeliveryLog(Base):
         Index('idx_delivery_logs_created_at', 'created_at'),
         Index('idx_delivery_logs_is_success', 'is_success'),
         Index('idx_delivery_logs_event_type', 'event_type'),
+
     ) 
