@@ -35,7 +35,6 @@ class DeliveryLog(Base):
     is_success = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    # Add indexes for frequently queried columns
     __table_args__ = (
         Index('idx_delivery_logs_subscription_id', 'subscription_id'),
         Index('idx_delivery_logs_webhook_id', 'webhook_id'),
@@ -44,5 +43,6 @@ class DeliveryLog(Base):
         Index('idx_delivery_logs_event_type', 'event_type'),
 
     ) 
+
 
 
