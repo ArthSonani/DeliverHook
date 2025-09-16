@@ -15,7 +15,6 @@ class Subscription(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    # Add indexes for frequently queried columns
     __table_args__ = (
         Index('idx_subscriptions_is_active', 'is_active'),
         Index('idx_subscriptions_created_at', 'created_at'),
@@ -45,3 +44,4 @@ class DeliveryLog(Base):
         Index('idx_delivery_logs_event_type', 'event_type'),
 
     ) 
+
