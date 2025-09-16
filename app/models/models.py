@@ -26,7 +26,7 @@ class DeliveryLog(Base):
     id = Column(Integer, primary_key=True, index=True)
     subscription_id = Column(Integer, ForeignKey("subscriptions.id"))
     webhook_id = Column(String, index=True)
-    event_type = Column(String, nullable=True)  # Store the event type
+    event_type = Column(String, nullable=True)  
     payload = Column(JSON)
     attempt_number = Column(Integer, default=1)
     status_code = Column(Integer, nullable=True)
@@ -44,4 +44,5 @@ class DeliveryLog(Base):
         Index('idx_delivery_logs_event_type', 'event_type'),
 
     ) 
+
 
